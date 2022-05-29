@@ -2,31 +2,40 @@ import requests
 from bs4 import BeautifulSoup
 import numpy as np
 
+tempgrid = []
+grid = []
 
 req = requests.get("https://sudokugenerator.com/sudoku/daily/")
-
 soup = BeautifulSoup(req.content, "html.parser")
 
-
-rows = soup.find_all('tr', class_="sudoku_row")
-
+rows = soup.find_all('input', type="text")
 for row in rows:
-
-        value = row.input['value']
-        print(value)
-        
-
+        value = row.get('value')
+        tempgrid.append(value)
+#print(tempgrid)
 
 
-grid = [[5,3,0,0,7,0,0,0,0],
-        [6,0,0,1,9,5,0,0,0],
-        [0,9,8,0,0,0,0,6,0],
-        [8,0,0,0,6,0,0,0,3],
-        [4,0,0,8,0,3,0,0,1],
-        [7,0,0,0,2,0,0,0,6],
-        [0,6,0,0,0,0,2,8,0],
-        [0,0,0,4,1,9,0,0,5],
-        [0,0,0,0,8,0,0,7,9]]
+row_array = []
+for i in range(3):
+        i = i*9
+        row_array.append(tempgrid[i])
+        row_array.append(tempgrid[i+1])
+        row_array.append(tempgrid[i+2])
+
+grid.append(row_array)
+
+for t in range(81):
+        print(t, ";", tempgrid[t])
+
+# grid = [[5,3,0,0,7,0,0,0,0],
+#         [6,0,0,1,9,5,0,0,0],
+#         [0,9,8,0,0,0,0,6,0],
+#         [8,0,0,0,6,0,0,0,3],
+#         [4,0,0,8,0,3,0,0,1],
+#         [7,0,0,0,2,0,0,0,6],
+#         [0,6,0,0,0,0,2,8,0],
+#         [0,0,0,4,1,9,0,0,5],
+#         [0,0,0,0,8,0,0,7,9]]
 
 
 def fitHere(y,x,n):
