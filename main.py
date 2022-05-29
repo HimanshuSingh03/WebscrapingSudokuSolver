@@ -1,4 +1,22 @@
+import requests
+from bs4 import BeautifulSoup
 import numpy as np
+
+
+req = requests.get("https://sudokugenerator.com/sudoku/daily/")
+
+soup = BeautifulSoup(req.content, "html.parser")
+
+
+rows = soup.find_all('tr', class_="sudoku_row")
+
+for row in rows:
+
+        value = row.input['value']
+        print(value)
+        
+
+
 
 grid = [[5,3,0,0,7,0,0,0,0],
         [6,0,0,1,9,5,0,0,0],
@@ -50,4 +68,3 @@ def main():
         print("\n Solved Sudoku:")
         solve()
 
-main()
