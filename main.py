@@ -2,30 +2,58 @@ import requests
 from bs4 import BeautifulSoup
 import numpy as np
 
+
 tempgrid = []
-grid = []
+
 
 req = requests.get("https://sudokugenerator.com/sudoku/daily/")
 soup = BeautifulSoup(req.content, "html.parser")
 
 rows = soup.find_all('input', type="text")
+
 for row in rows:
         value = row.get('value')
         tempgrid.append(value)
-#print(tempgrid)
 
 
-row_array = []
-for i in range(3):
-        i = i*9
-        row_array.append(tempgrid[i])
-        row_array.append(tempgrid[i+1])
-        row_array.append(tempgrid[i+2])
 
-grid.append(row_array)
 
-for t in range(81):
-        print(t, ";", tempgrid[t])
+def arrangegrid(tempgrid):
+        
+        counter = 0
+        grid = []
+        for i in range(9):
+                row_array = []
+                
+                
+                if i == 3:
+                        counter = 1
+                elif i == 6:
+                        counter = 2
+
+                for j in range(3):
+
+                        index = ((9*j) + 3*i) + counter*27
+                        row_array.append(tempgrid[index])
+                        print(index)
+
+                        index = ((9*j +1) + 3*i) + counter*27
+                        row_array.append(tempgrid[index])
+                        print(index)
+
+                        index = ((9*j +2) + 3*i) + counter*27
+                        row_array.append(tempgrid[index])
+                        print(index)
+
+                grid.append(row_array)
+                #print(row_array)
+        # print(grid)
+
+
+arrangegrid(tempgrid)
+
+
+
 
 # grid = [[5,3,0,0,7,0,0,0,0],
 #         [6,0,0,1,9,5,0,0,0],
