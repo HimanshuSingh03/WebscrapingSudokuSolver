@@ -4,7 +4,6 @@ import numpy as np
 
 
 tempgrid = []
-counter = 0
 grid = []
 
 
@@ -26,33 +25,31 @@ def scrape():
 
 
 def arrangegrid(tempgrid):
-        global counter
         global grid
 
         print("arranging...")
-        for i in range(3):
-                row_array = []
+
+        for k in range(3):
+
+                for i in range(3):
+                        row_array = []
+                        
+
+                        for j in range(3):
+
+                                index = ((9*j) + 3*i) + k*27
+                                row_array.append(tempgrid[index])
+                                
+                                index = ((9*j +1) + 3*i) + k*27
+                                row_array.append(tempgrid[index])
+                                
+                                index = ((9*j +2) + 3*i) + k*27
+                                row_array.append(tempgrid[index])
+                                
+                        grid.append(row_array)
                 
+        return grid
 
-                for j in range(3):
-
-                        index = ((9*j) + 3*i) + counter*27
-                        row_array.append(tempgrid[index])
-                        
-                        index = ((9*j +1) + 3*i) + counter*27
-                        row_array.append(tempgrid[index])
-                        
-                        index = ((9*j +2) + 3*i) + counter*27
-                        row_array.append(tempgrid[index])
-                        
-                grid.append(row_array)
-        
-        counter +=1
-
-        if counter != 3:
-                arrangegrid(tempgrid)
-        else:
-                return grid
 
 
 
@@ -73,7 +70,6 @@ def fitHere(y,x,n):
         ysquare = y//3
         xsquare = x//3 #can only be 0,1,2
         
-        #print(ysquare,xsquare)
 
         for i in range(3):
                 for j in range(3):
@@ -86,6 +82,8 @@ def solve():
         global grid
 
         print("solving...")
+        
+
         for y in range(9):
                 for x in range(9):
                         if grid[y][x] == 0:
@@ -100,11 +98,10 @@ def solve():
 def main():
 
         tempgrid = scrape()
-        print(tempgrid)
         sudoku = arrangegrid(tempgrid)
-        print(sudoku)
         print("Current Sudoku: \n", np.matrix(sudoku))
-        # print("\n Solved Sudoku:")
-        # solve()
-
+        
+        print("\n Solved Sudoku:")
+        solve()
+        
 main()
