@@ -19,6 +19,12 @@ def scrape():
                 value = row.get('value')
                 tempgrid.append(value)
         
+        for x in range(len(tempgrid)):
+                if tempgrid[x] == '':
+                        tempgrid[x] = 0
+                else:
+                        tempgrid[x] = int(tempgrid[x])
+
         return tempgrid
 
 
@@ -47,7 +53,8 @@ def arrangegrid(tempgrid):
                                 row_array.append(tempgrid[index])
                                 
                         grid.append(row_array)
-                
+
+        
         return grid
 
 
@@ -80,8 +87,6 @@ def fitHere(y,x,n):
 
 def solve():
         global grid
-
-        print("solving...")
         
 
         for y in range(9):
@@ -99,7 +104,7 @@ def main():
 
         tempgrid = scrape()
         sudoku = arrangegrid(tempgrid)
-        print("Current Sudoku: \n", np.matrix(sudoku))
+        print("Daily Sudoku: \n", np.matrix(sudoku))
         
         print("\n Solved Sudoku:")
         solve()
